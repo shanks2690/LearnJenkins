@@ -1,20 +1,11 @@
 pipeline {
     agent any
     stages {
-        stage('Check npm Version') {
-            agent {
-                docker {
-                    image 'node:18'
-                }
-            }
-            steps {
-                sh 'npm --version'
-            }
-        }
         stage('Package Project') {
             agent {
                 docker {
-                    image 'maven:3.9.5-eclipse-temurin-21' // Valid Maven image for JDK 21
+                    image 'maven:3.9.5-eclipse-temurin-21'
+                    args '-v /Users/$(whoami)/.m2:/root/.m2'
                 }
             }
             steps {
