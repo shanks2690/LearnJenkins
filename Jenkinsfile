@@ -7,9 +7,13 @@
         }
         stages {
             stage('Check npm Version') {
+                sh 'npm --version'
+            }
+            stage('package project ') {
                 steps {
-                    sh 'npm --version'
+                    sh 'mvn clean install'
                 }
+
             }
         }
     }
