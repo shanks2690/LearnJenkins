@@ -14,7 +14,7 @@ pipeline {
         stage('Package Project') {
             agent {
                 docker {
-                    image 'maven:3.8.5-openjdk-17' // Use Maven image for this stage
+                    image 'maven:3.8.5-openjdk-21' // Use Maven image for this stage
                 }
             }
             steps {
