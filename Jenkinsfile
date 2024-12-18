@@ -18,7 +18,11 @@ pipeline {
                 }
             }
             steps {
-                sh 'mvn clean install' // Package the project
+                sh '''
+                mvn clean install
+                java -jar target/LearnJenkins-0.0.1-SNAPSHOT.jar
+''' // Package the project
+
             }
         }
     }
