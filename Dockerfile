@@ -1,5 +1,5 @@
 # Start with a lightweight base image that supports Java
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:21-jre
 
 # Set the working directory inside the container
 WORKDIR /app
