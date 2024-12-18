@@ -14,7 +14,7 @@ pipeline {
         stage('Package Project') {
             agent {
                 docker {
-                    image 'maven:3.9.3-eclipse-temurin-21' // Correct Maven image for JDK 21
+                    image 'maven:3.9.5-eclipse-temurin-21' // Valid Maven image for JDK 21
                 }
             }
             steps {
