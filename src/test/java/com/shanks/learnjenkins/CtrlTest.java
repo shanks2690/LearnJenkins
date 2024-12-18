@@ -25,6 +25,6 @@ class CtrlTest {
         String response = this.restTemplate.getForObject(url, String.class);
 
         // Assert
-        assertThat(response).isEqualTo("Hello orld!");
+        assertThat(response).isEqualTo("Hello World!");
     }
 }
