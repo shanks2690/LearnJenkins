@@ -5,7 +5,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.9.5-eclipse-temurin-21'
-                    args '-v /Users/shanks2690/.m2/repository'
+                    args '-v /Users/shanks2690/.m2:/root/.m2' // Correct volume mount
                 }
             }
             steps {
