@@ -12,28 +12,25 @@ pipeline {
                 sh 'mvn clean install -Dmaven.repo.local=/root/.m2'
             }
         }
+
         stage('Build Docker Image') {
             agent any
             steps {
                 sh 'docker build -t shanks_jenkins .'
             }
         }
+
         stage('Push to ECR') {
+            // Use the AWS CLI image directly
             agent {
                 docker {
-                    image 'docker:24.0.5-cli'
+                    image 'amazon/aws-cli:2.13.14' // Adjust to latest or desired version
                     args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
                     sh '''
-                        apk update
-                        apk add --no-cache curl unzip
-                        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-                        unzip awscliv2.zip
-                        ./aws/install
-
                         AWS_REGION="ap-south-1"
                         AWS_ACCOUNT_ID="863518451855"
                         REPO_NAME="shanks_jenkins"
