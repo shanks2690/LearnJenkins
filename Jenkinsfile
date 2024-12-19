@@ -26,7 +26,7 @@ pipeline {
                     sh'''
                     aws --version
                      echo "Hi Shanks. Pushed to S3 from jenkins"> shanks/shanks.txt
-                     aws s3 cp shanks s3://shanks2690
+                     aws s3 sync shanks s3://shanks2690
              '''
                 }
 
