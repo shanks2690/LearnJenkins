@@ -11,6 +11,7 @@ pipeline {
             steps {
                 sh '''
                 mvn clean install -Dmaven.repo.local=/root/.m2
+                docker build -t shanks_jenkins .
                 '''
             }
         }
@@ -28,6 +29,8 @@ pipeline {
                     aws s3 ls
                     
                     aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 863518451855.dkr.ecr.ap-south-1.amazonaws.com
+                docker tag shanks_jenkins:latest 863518451855.dkr.ecr.ap-south-1.amazonaws.com/shanks_jenkins:latest
+                docker push 863518451855.dkr.ecr.ap-south-1.amazonaws.com/shanks_jenkins:latest
                 '''
                 }
 
