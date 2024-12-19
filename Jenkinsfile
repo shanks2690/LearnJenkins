@@ -21,6 +21,9 @@ pipeline {
                     args '-u root'
                 }
             }
+            steps {
+                echo "This is amazon-awscli step"
+            }
         }
     }
 }
