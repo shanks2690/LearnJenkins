@@ -26,7 +26,7 @@ pipeline {
                     sh'''
                     aws --version
                     mkdir shanks
-                     echo "Hi Shanks. Pushed to S3 from jenkins"> shanks/shanks.txt
+                     echo "Hi Kuku. Pushed to S3 from jenkins"> shanks/Kuku.txt
                      aws s3 sync shanks s3://shanks2690
              '''
                 }
