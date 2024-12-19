@@ -11,7 +11,7 @@ pipeline {
             steps {
                 sh '''
                 mvn clean install -Dmaven.repo.local=/root/.m2
-                java -jar target/LearnJenkins-0.0.1-SNAPSHOT.jar
+                java -jar target/LearnJenkins-0.0.1-SNAPSHOT.jar &
                 '''
             }
         }
