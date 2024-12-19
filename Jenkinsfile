@@ -11,8 +11,15 @@ pipeline {
             steps {
                 sh '''
                 mvn clean install -Dmaven.repo.local=/root/.m2
-                java -jar target/LearnJenkins-0.0.1-SNAPSHOT.jar &
                 '''
+            }
+        }
+        stage('Prepare for AWS Deployment') {
+            agent {
+                docker {
+                    image 'amazon/aws-cli'
+                    args '-u root'
+                }
             }
         }
     }
