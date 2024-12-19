@@ -25,8 +25,8 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
                     sh'''
                     aws --version
-                     echo "Hi Shanks. Pushed to S3 from jenkins"> shanks.txt
-                     aws s3 cp shanks.txt s3://shanks2690/shanks.txt
+                     echo "Hi Shanks. Pushed to S3 from jenkins"> shanks/shanks.txt
+                     aws s3 cp shanks s3://shanks2690
              '''
                 }
 
