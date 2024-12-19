@@ -9,25 +9,26 @@ pipeline {
                 }
             }
             steps {
-                sh 'mvn clean install -Dmaven.repo.local=/root/.m2'
+                sh '''
+                mvn clean install -Dmaven.repo.local=/root/.m2
+                '''
             }
         }
-
-
-        stage('Push to S3') {
-            // Use the AWS CLI image directly
+        stage('Prepare for AWS Deployment') {
             agent {
                 docker {
-                    image 'amazon/aws-cli:2.13.14' // Adjust to latest or desired version
-                    args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+                    image 'amazon/aws-cli'
+                    args '--entrypoint=\'\''
                 }
             }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
-                    sh '''
-                        aws s3 ls
-                    '''
+                    sh'''
+                    aws --version
+                    aws s3 ls
+             '''
                 }
+
             }
         }
     }
