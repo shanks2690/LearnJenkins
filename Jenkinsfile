@@ -26,6 +26,8 @@ pipeline {
                     sh'''
                     aws --version
                     aws s3 ls
+                    
+                    aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 863518451855.dkr.ecr.ap-south-1.amazonaws.com
                 '''
                 }
 
