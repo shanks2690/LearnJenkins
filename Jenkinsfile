@@ -25,7 +25,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
                     sh'''
                     aws --version
-                    mkdir shanks
+                    mkdir  -p shanks
                      echo "Hi Kuku. Pushed to S3 from jenkins"> shanks/Kuku.txt
                      aws s3 sync shanks s3://shanks2690
              '''
