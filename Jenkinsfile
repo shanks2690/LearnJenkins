@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment{
+        AWS_ACCESS_KEY_ID = env.process.username
+        AWS_SECRET_ACCESS_KEY
+        AWS_DEFAULT_REGION
+    }
     stages {
         stage('Package Project') {
             agent {
@@ -22,9 +27,13 @@ pipeline {
                 }
             }
             steps {
-               sh'''
+                withCredentials([usernamePassword(credentialsId: 'aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
+                    sh'''
                     aws --version
+                    aws s3 ls
                 '''
+                }
+
             }
         }
     }
