@@ -14,7 +14,7 @@ pipeline {
                 '''
             }
         }
-        stage('Prepare for AWS Deployment') {
+        stage('Push to S3') {
             agent {
                 docker {
                     image 'amazon/aws-cli'
