@@ -13,8 +13,14 @@ pipeline {
             }
         }
 
+        stage('Build Docker Image') {
+            agent any
+            steps {
+                sh 'docker build -t shanks_jenkins .'
+            }
+        }
 
-        stage('Push to S3') {
+        stage('Push to ECR') {
             // Use the AWS CLI image directly
             agent {
                 docker {
@@ -25,7 +31,18 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
                     sh '''
-                        aws s3 ls
+                        AWS_REGION="ap-south-1"
+                        AWS_ACCOUNT_ID="863518451855"
+                        REPO_NAME="shanks_jenkins"
+                        IMAGE_TAG="latest"
+
+                        # Login to ECR
+                        aws ecr get-login-password --region $AWS_REGION | \
+                          docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+
+                        # Tag and push
+                        docker tag shanks_jenkins:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$REPO_NAME:$IMAGE_TAG
+                        docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$REPO_NAME:$IMAGE_TAG
                     '''
                 }
             }
