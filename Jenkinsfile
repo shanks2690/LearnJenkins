@@ -22,7 +22,9 @@ pipeline {
                 }
             }
             steps {
-                echo "This is amazon-awscli step"
+               sh'''
+                    aws --version
+                '''
             }
         }
     }
